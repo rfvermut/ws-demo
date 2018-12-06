@@ -114,6 +114,24 @@ pipeline {
           }
         }
       }
+      stage('Promote V32') {
+        when {
+            branch 'version32'
+        }
+        steps {
+          dir ('./charts/demo') {
+            container('maven') {
+              sh 'jx step changelog --version v\$(cat ../../VERSION)'
+
+              // release the helm chart
+              sh 'jx step helm release'
+
+              // promote through all 'Auto' promotion Environments
+              sh 'jx promote -b --env version32 --timeout 1h --version \$(cat ../../VERSION)'
+            }
+          }
+        }
+      }
     }
     post {
         always {
