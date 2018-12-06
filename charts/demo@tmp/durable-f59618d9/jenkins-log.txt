@@ -1,0 +1,5 @@
++ make tag
+sed -i -e "s/version:.*/version: 34.0.6-version32/" Chart.yaml
+sed -i -e "s|repository: .*|repository: 376652167451.dkr.ecr.us-east-1.amazonaws.com\/rfvermut\/demo|" values.yaml
+sed -i -e "s/tag: .*/tag: 34.0.6-version32/" values.yaml
+git add --all
